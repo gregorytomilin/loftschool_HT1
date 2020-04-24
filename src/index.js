@@ -31,6 +31,7 @@ function returnFirstArgument(b) {
    sumWithDefaults(10) вернет 110
  */
 function sumWithDefaults(a, b) {
+    if (b === undefined){b=100}
     return a + b
 }
 
@@ -61,8 +62,8 @@ function returnFnResult(fn) {
    console.log(f()); // выведет 12
    console.log(f()); // выведет 13
  */
-function returnCounter(number = 10) {
-    return function f() {number = number + 1};
+function returnCounter(number = 0) {
+   return function f() {number = number + 1};
 }
 
 /*
