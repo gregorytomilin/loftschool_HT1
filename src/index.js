@@ -6,6 +6,7 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
+
 function forEach(array, fn) {
     for (var i = 0; i < array.length; i++) {
         fn(array[i], i, array);
@@ -19,10 +20,11 @@ function forEach(array, fn) {
  Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
  */
 function map(array, fn) {
-    let new_array = [];
-    for (let i = 0, i < array.length; i++){
-        new_array.push(fn(array[i],i,array));
+    let newArray = [];
+    for (let i = 0; i < array.length; i++){
+        newArray[i] = fn(array[i],i,array);
     }
+    return newArray;
 }
 
 /*
@@ -32,7 +34,16 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
+    // let newArray = [];
+    let prevVar = initial || array[0];
+
+    for (let i = initial ? 0 : 1; i< array.length; i++ ){
+        prevVar = fn(prevVar,array[i],i,array)
+    }
+    return prevVar;
+//
 }
+
 
 /*
  Задание 4:
@@ -43,6 +54,12 @@ function reduce(array, fn, initial) {
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
+    let newArr = [];
+    for (let key in obj){
+        key = key.toUpperCase();
+        newArr.push(key);
+    }
+    return newArr;
 }
 
 /*
