@@ -17,8 +17,12 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-    if ( !(Array.isArray(array)) || !(array.length) )  {throw new Error('empty array');} /*проверка на массив и на наличие элементов*/
-    else if (typeof (fn) !== 'function') {throw new Error('fn is not a function');} /*Проверка на функцию*/
+    if ( !(Array.isArray(array)) || !(array.length) )  {
+        throw new Error('empty array');
+    } /*проверка на массив и на наличие элементов*/
+    else if (typeof (fn) !== 'function') {
+        throw new Error('fn is not a function');
+    } /*Проверка на функцию*/
 
     for (let i = 0; i < array.length; i++) {
         if (fn(array[i]) == false ) {
@@ -134,7 +138,7 @@ function calculator(number) {
                 }
 
                 return pre / cur;
-            }
+            };
 
             return args.reduce(division, number);
         },
