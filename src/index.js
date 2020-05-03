@@ -21,9 +21,11 @@ function forEach(array, fn) {
  */
 function map(array, fn) {
     let newArray = [];
-    for (let i = 0; i < array.length; i++){
-        newArray[i] = fn(array[i],i,array);
+
+    for (let i = 0; i < array.length; i++) {
+        newArray[i] = fn(array[i], i, array);
     }
+
     return newArray;
 }
 
@@ -37,14 +39,13 @@ function reduce(array, fn, initial) {
     // let newArray = [];
     let prevVar = initial || array[0];
 
-    for (let i = initial ? 0 : 1; i< array.length; i++ ){
-        prevVar = fn(prevVar,array[i],i,array)
+    for (let i = initial ? 0 : 1; i < array.length; i++ ) {
+        prevVar = fn(prevVar, array[i], i, array)
     }
+
     return prevVar;
 //
 }
-
-
 /*
  Задание 4:
 
@@ -55,10 +56,12 @@ function reduce(array, fn, initial) {
  */
 function upperProps(obj) {
     let newArr = [];
-    for (let key in obj){
+
+    for (let key in obj) {
         key = key.toUpperCase();
         newArr.push(key);
     }
+
     return newArr;
 }
 
