@@ -17,12 +17,11 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-    if ( !(Array.isArray(array)) || !(array.length) )  {
-        throw new Error('empty array');
-    } /*проверка на массив и на наличие элементов*/
-    else if (typeof (fn) !== 'function') {
+    if ( !(Array.isArray(array)) || !(array.length)) {
+        throw new Error('empty array')
+    } else if (typeof (fn) !== 'function') { /*  проверка на массив и на наличие элементов   */
         throw new Error('fn is not a function');
-    } /*Проверка на функцию*/
+    } /*    Проверка на функцию*/
 
     for (let i = 0; i < array.length; i++) {
         if (fn(array[i]) == false ) {
@@ -30,6 +29,7 @@ function isAllTrue(array, fn) {
         }
 
     }
+
     return true
 
 }
@@ -93,6 +93,7 @@ function returnBadArguments(fn) {
             newArray.push(arguments[i]);
         }
     }
+
     return newArray;
 
 }
@@ -115,7 +116,7 @@ function returnBadArguments(fn) {
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number) {
-    var number = number || 0;
+    number = number || 0;
 
     if (typeof number != 'number') {
         throw new Error('number is not a number');
@@ -133,7 +134,7 @@ function calculator(number) {
         div: function (...args) {
 
             let division = (pre, cur) => {
-                if ( (pre === 0) || (cur === 0) )  {
+                if ( (pre === 0) || (cur === 0) ) {
                     throw new Error('division by 0');
                 }
 
