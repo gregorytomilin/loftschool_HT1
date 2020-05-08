@@ -16,6 +16,15 @@
    homeworkContainer.appendChild(newDiv);
  */
 const homeworkContainer = document.querySelector('#homework-container');
+const button = document.createElement('button');
+homeworkContainer.append(button);
+button.addEventListener('click', ()=>{
+    let div = document.createElement('div')
+    div.classList.add('draggable')
+    div.width = 100+'px';
+    div.height = 100+'px';
+    homeworkContainer.appendChild(div)
+});
 
 /*
  Функция должна создавать и возвращать новый div с классом draggable-div и случайными размерами/цветом/позицией
