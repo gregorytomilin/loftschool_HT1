@@ -12,7 +12,9 @@
  */
 function createDivWithText(text) {
     let div = document.createElement('div');
+
     div.innerText = text;
+
     return div;
 }
 
@@ -50,14 +52,14 @@ function prepend(what, where) {
  */
 function findAllPSiblings(where) {
     let searchArray = [];
+
     for (const children of where.children) {
-        if (children.nextElementSibling === null){
+        if (children.nextElementSibling === null) {
             return searchArray;
-        } else if (children.nextElementSibling.tagName === 'P'){
+        } else if (children.nextElementSibling.tagName === 'P') {
             searchArray.push(children)
         }
     }
-// (typeof where.childNodes[i].nextElementSibling = 'p')
 
     return searchArray;
 }
@@ -104,7 +106,7 @@ function findError(where) {
 function deleteTextNodes(where) {
 
     for (let child of where.childNodes) {
-        if (child.nodeType == 3){
+        if (child.nodeType == 3) {
             child.parentNode.removeChild(child);
         }
     }
@@ -129,8 +131,6 @@ function deleteTextNodesRecursive(where) {
 
         } else if (child.nodeType === 1) {
             deleteTextNodesRecursive(child);
-
-
         }
     }
 }
@@ -156,6 +156,7 @@ function deleteTextNodesRecursive(where) {
    }
  */
 function collectDOMStat(root) {
+    root.children
 }
 
 /*
