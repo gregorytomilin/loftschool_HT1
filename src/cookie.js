@@ -128,7 +128,7 @@ document.body.addEventListener('click',(e)=>{
     if(e.target.innerText === 'Удалить'){
         let deleteName = e.target.parentNode.parentNode.children[0].innerText;
         deleteCookie (deleteName);
-        searchResultObj()
+        searchResultObj();
         cookieLoadTable();
     }
 });
