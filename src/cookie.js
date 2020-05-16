@@ -43,64 +43,103 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
+
+
 filterNameInput.addEventListener('keyup', function(e) {
     // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
-    let searchResult = {};
-    console.log(e.target.value)
+    searchResultObj();
 
 
+
+    console.log(searchResult);
+    cookieLoadTable()
 });
 
+function searchResultObj() {
+    let chunk = filterNameInput.value;
+    console.log(chunk)
 
-let tableBody = document.querySelector('tbody');
-let buttonDelete = document.createElement('button');
-buttonDelete.innerHTML = 'удалить';
+    if (chunk === ''){
+        searchResult = cookieObj;
+    } else {
+        searchResult = {};
+        for (let cookieUnit in cookieObj) {
+            if(isMatching(cookieUnit, chunk)){
+                searchResult[cookieUnit] = cookieObj[cookieUnit];
 
+            }
+        }
+    }
+}
+
+
+// Функция поиска совпадений
 function isMatching(full, chunk) {
     return full.toUpperCase().includes(chunk.toUpperCase());
 }
 
+let buttonDelete = document.createElement('button');
+buttonDelete.innerHTML = 'удалить';
+
+
+// Добавление cookie
 addButton.addEventListener('click', () => {
     // здесь можно обработать нажатие на кнопку "добавить cookie"
-
     document.cookie = `${addNameInput.value}=${addValueInput.value};`;
-    cookieLoadTable()
+    addNameInput.value = '';
+    addValueInput.value = '';
+    cookieRe();
+    searchResultObj()
+    cookieLoadTable();
 
 });
 
 let cookieObj;
+
+//Функция обновения данны кук при операциях
+function cookieRe(){
+cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
+    const [name, value] = curr.split('=');
+    prev[name] = value;
+    return prev;
+}, {});
+console.log(cookieObj)
+}
+
+cookieRe();
+
+let searchResult = cookieObj;
+
 function cookieLoadTable() {
+        listTable.innerHTML = '';
+        // if (searchResult === {}){
+        //     listTable.innerHTML = '';
+        // } else{
+            for (let searchResultUnit in searchResult) {
+                listTable.innerHTML += `<tr><td>${searchResultUnit}</td><td>${searchResult[searchResultUnit]}</td><td><button>Удалить</button></td></tr>`}
+            // }
+}
 
-                cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
-                const [name, value] = curr.split('=');
-                prev[name] = value;
-                return prev;
-            }, {});
 
 
-        tableBody.innerHTML = '';
-        if (cookieObj === {}){
-            tableBody.innerHTML = '';
-        } else{
-            for (let cookieUnit in cookieObj) {
-                tableBody.innerHTML += `<tr><td>${cookieUnit}</td><td>${cookieObj[cookieUnit]}</td><td><button>Удалить</button></td></tr>`}
-            }
-        }
-
+// обработка удаления кук
 document.body.addEventListener('click',(e)=>{
 
     if(e.target.innerText === 'Удалить'){
         let deleteName = e.target.parentNode.parentNode.children[0].innerText;
         deleteCookie (deleteName);
+        searchResultObj()
         cookieLoadTable();
     }
 });
 
 cookieLoadTable();
-console.log(cookieObj);
 
+// Функция удаления куки
 function deleteCookie (cookieName) {
     let cookie_date = new Date ( );  // Текущая дата и время
     cookie_date.setTime ( cookie_date.getTime() - 1 );
     document.cookie = cookieName += "=; expires=" + cookie_date.toGMTString();
+    cookieRe();
+    cookieLoadTable();
 }
