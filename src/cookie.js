@@ -43,13 +43,22 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
-filterNameInput.addEventListener('keyup', function() {
+filterNameInput.addEventListener('keyup', function(e) {
     // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
+    let searchResult = {};
+    console.log(e.target.value)
+
+
 });
 
 
 let tableBody = document.querySelector('tbody');
+let buttonDelete = document.createElement('button');
+buttonDelete.innerHTML = 'удалить';
 
+function isMatching(full, chunk) {
+    return full.toUpperCase().includes(chunk.toUpperCase());
+}
 
 addButton.addEventListener('click', () => {
     // здесь можно обработать нажатие на кнопку "добавить cookie"
@@ -59,23 +68,39 @@ addButton.addEventListener('click', () => {
 
 });
 
+let cookieObj;
 function cookieLoadTable() {
 
-    let cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
-        const [name, value] = curr.split('=');
-        prev[name] = value;
-        return prev;
-    }, {});
-    console.log(cookieObj);
-
-    tableBody.innerHTML = '';
-    for (let cookieUnit in cookieObj) {
-        let buttonDelete = document.createElement('button');
-        buttonDelete.innerHTML = 'удалить';
+                cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
+                const [name, value] = curr.split('=');
+                prev[name] = value;
+                return prev;
+            }, {});
 
 
-        tableBody.innerHTML += `<tr><td>${cookieUnit}</td><td>${cookieObj[cookieUnit]}</td><td></td></tr>`
+        tableBody.innerHTML = '';
+        if (cookieObj === {}){
+            tableBody.innerHTML = '';
+        } else{
+            for (let cookieUnit in cookieObj) {
+                tableBody.innerHTML += `<tr><td>${cookieUnit}</td><td>${cookieObj[cookieUnit]}</td><td><button>Удалить</button></td></tr>`}
+            }
+        }
+
+document.body.addEventListener('click',(e)=>{
+
+    if(e.target.innerText === 'Удалить'){
+        let deleteName = e.target.parentNode.parentNode.children[0].innerText;
+        deleteCookie (deleteName);
+        cookieLoadTable();
     }
-}
+});
 
 cookieLoadTable();
+console.log(cookieObj);
+
+function deleteCookie (cookieName) {
+    let cookie_date = new Date ( );  // Текущая дата и время
+    cookie_date.setTime ( cookie_date.getTime() - 1 );
+    document.cookie = cookieName += "=; expires=" + cookie_date.toGMTString();
+}
