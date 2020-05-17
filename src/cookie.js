@@ -64,7 +64,7 @@ function searchResultObj() {
     } else {
         searchResult = {};
         for (let cookieUnit in cookieObj) {
-            if(isMatching(cookieUnit, chunk)){
+            if(isMatching(cookieUnit, chunk) || isMatching(cookieObj[cookieUnit], chunk)){
                 searchResult[cookieUnit] = cookieObj[cookieUnit];
 
             }
@@ -86,10 +86,10 @@ buttonDelete.innerHTML = 'удалить';
 addButton.addEventListener('click', () => {
     // здесь можно обработать нажатие на кнопку "добавить cookie"
     document.cookie = `${addNameInput.value}=${addValueInput.value};`;
-    addNameInput.value = '';
-    addValueInput.value = '';
+    // addNameInput.value = '';
+    // addValueInput.value = '';
     cookieRe();
-    searchResultObj()
+    searchResultObj();
     cookieLoadTable();
 
 });
@@ -98,11 +98,14 @@ let cookieObj;
 
 //Функция обновения данны кук при операциях
 function cookieRe(){
-cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
-    const [name, value] = curr.split('=');
-    prev[name] = value;
-    return prev;
-}, {});
+    if (document.cookie){
+        cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
+            const [name, value] = curr.split('=');
+            prev[name] = value;
+            return prev;
+        }, {})
+    } else{
+        cookieObj = {};};
 console.log(cookieObj)
 }
 
