@@ -43,28 +43,21 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
-
-
-filterNameInput.addEventListener('keyup', function(e) {
+filterNameInput.addEventListener('keyup', function() {
     // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
     searchResultObj();
-
-
-
-    console.log(searchResult);
     cookieLoadTable()
 });
 
 function searchResultObj() {
     let chunk = filterNameInput.value;
-    console.log(chunk)
 
-    if (chunk === ''){
+    if (chunk === '') {
         searchResult = cookieObj;
     } else {
         searchResult = {};
         for (let cookieUnit in cookieObj) {
-            if(isMatching(cookieUnit, chunk) || isMatching(cookieObj[cookieUnit], chunk)){
+            if (isMatching(cookieUnit, chunk) || isMatching(cookieObj[cookieUnit], chunk)) {
                 searchResult[cookieUnit] = cookieObj[cookieUnit];
 
             }
@@ -72,15 +65,14 @@ function searchResultObj() {
     }
 }
 
-
 // Функция поиска совпадений
 function isMatching(full, chunk) {
     return full.toUpperCase().includes(chunk.toUpperCase());
 }
 
 let buttonDelete = document.createElement('button');
-buttonDelete.innerHTML = 'удалить';
 
+buttonDelete.innerHTML = 'удалить';
 
 // Добавление cookie
 addButton.addEventListener('click', () => {
@@ -96,17 +88,19 @@ addButton.addEventListener('click', () => {
 
 let cookieObj;
 
-//Функция обновения данны кук при операциях
-function cookieRe(){
-    if (document.cookie){
-        cookieObj = document.cookie.split('; ').reduce((prev,curr)=>{
+// Функция обновения данны кук при операциях
+function cookieRe() {
+    if (document.cookie) {
+        cookieObj = document.cookie.split('; ').reduce((prev, curr)=>{
             const [name, value] = curr.split('=');
+
             prev[name] = value;
+
             return prev;
         }, {})
-    } else{
-        cookieObj = {};};
-console.log(cookieObj)
+    } else {
+        cookieObj = {};
+    }
 }
 
 cookieRe();
@@ -114,22 +108,18 @@ cookieRe();
 let searchResult = cookieObj;
 
 function cookieLoadTable() {
-        listTable.innerHTML = '';
-        // if (searchResult === {}){
-        //     listTable.innerHTML = '';
-        // } else{
-            for (let searchResultUnit in searchResult) {
-                listTable.innerHTML += `<tr><td>${searchResultUnit}</td><td>${searchResult[searchResultUnit]}</td><td><button>Удалить</button></td></tr>`}
-            // }
+    listTable.innerHTML = '';
+    for (let searchResultUnit in searchResult) {
+        listTable.innerHTML += `<tr><td>${searchResultUnit}</td><td>${searchResult[searchResultUnit]}</td><td><button>Удалить</button></td></tr>`
+    }
 }
 
-
-
 // обработка удаления кук
-document.body.addEventListener('click',(e)=>{
+document.body.addEventListener('click', (e)=>{
 
-    if(e.target.innerText === 'Удалить'){
+    if (e.target.innerText === 'Удалить') {
         let deleteName = e.target.parentNode.parentNode.children[0].innerText;
+
         deleteCookie (deleteName);
         searchResultObj();
         cookieLoadTable();
@@ -140,9 +130,10 @@ cookieLoadTable();
 
 // Функция удаления куки
 function deleteCookie (cookieName) {
-    let cookie_date = new Date ( );  // Текущая дата и время
-    cookie_date.setTime ( cookie_date.getTime() - 1 );
-    document.cookie = cookieName += "=; expires=" + cookie_date.toGMTString();
+    let cookieDate = new Date ( );// Текущая дата и время
+
+    cookieDate.setTime ( cookieDate.getTime() - 1 );
+    document.cookie = cookieName += '=; expires=' + cookieDate.toGMTString();
     cookieRe();
     cookieLoadTable();
 }
