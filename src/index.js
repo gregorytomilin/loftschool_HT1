@@ -10,8 +10,10 @@
  */
 function delayPromise(seconds) {
 
-    return new Promise((resolve)=>{
-        setTimeout(()=>{resolve()}, seconds*1000)
+    return new Promise((resolve) => {
+        setTimeout( () => {
+            resolve()
+        }, seconds * 1000)
     })
 
 }
@@ -29,7 +31,6 @@ function delayPromise(seconds) {
  Пример:
    loadAndSortTowns().then(towns => console.log(towns)) // должна вывести в консоль отсортированный массив городов
  */
-
 
 // 1й вариант
 // function loadAndSortTowns() {
@@ -59,33 +60,26 @@ function delayPromise(seconds) {
 //     });// конец промиса
 // }// конец функции loadAndSortTowns
 
-
-
-
 // 2й вариант
 function loadAndSortTowns() {
-    return new Promise((resolve) => {
-            fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
-                .then(towns => towns.json())
-                .then(towns => {
-                    let townsF = towns.sort((a, b) => {
-                        if (a.name > b.name) {
-                            return 1
-                        }
-                        if (a.name < b.name) {
-                            return -1
-                        }
-                    });
-                    return townsF
-                })
-                .then(towns=>resolve(towns))
+    return fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+        .then(towns => towns.json())
+        .then(towns => {
+            let townsF = towns.sort((a, b) => {
 
+                if (a.name > b.name) {
+                    return 1
+                }
+                if (a.name < b.name) {
+                    return -1
+                }
+            });
 
+            return townsF;
 
-        }
-    )
+        })
+
 }// конец функции loadAndSortTowns
-
 
 export {
     delayPromise,

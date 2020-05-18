@@ -37,26 +37,22 @@ const homeworkContainer = document.querySelector('#homework-container');
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
 function loadTowns() {
-    return new Promise((resolve) => {
-            fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
-                .then(towns => towns.json())
-                .then(towns => {
-                    let townsF = towns.sort((a, b) => {
-                        if (a.name > b.name) {
-                            return 1
-                        }
-                        if (a.name < b.name) {
-                            return -1
-                        }
-                    });
-                    return townsF
-                })
-                .then(towns=>resolve(towns))
 
+    return fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+        .then(towns => towns.json())
+        .then(towns => {
 
+            let townsF = towns.sort((a, b) => {
+                if (a.name > b.name) {
+                    return 1
+                }
+                if (a.name < b.name) {
+                    return -1
+                }
+            });
 
-        }
-    )
+            return townsF
+        })
 }
 
 /*
@@ -89,17 +85,21 @@ loadTowns()
         filterBlock.style.display = 'block';
         loadingBlock.style.display = 'none';
 
-        // Событие набора в инпуте
+        //  Событие набора в инпуте
         filterInput.addEventListener('keyup', function (event) {
-        //Перенная сбора данных с инпута
+        //  Перенная сбора данных с инпута
+
             let chunk = event.target.value;
-        // Блок вывода результата поиска по городам
+
+            //  Блок вывода результата поиска по городам
             filterResult.innerHTML = '';
-        // Перебор массива городов и отображения совпадений
-            for (let index = 0; index < townsList.length; index++) {
-                const element = townsList[index].name;
+            // Перебор массива городов и отображения совпадений
+            for (let i = 0; i < townsList.length; i++) {
+                const element = townsList[i].name;
+
                 if (isMatching(element, chunk)) {
                     let div = document.createElement('div');
+
                     div.textContent = element;
                     filterResult.appendChild(div);
 
@@ -111,9 +111,6 @@ loadTowns()
                 filterResult.innerHTML = '';
             }
         });
-    })
-    .catch(() => {
-
     });
 
 export {
