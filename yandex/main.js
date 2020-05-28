@@ -18,55 +18,33 @@ Date.prototype.format = function(format = 'yyyy-mm-dd') {
 };
 
 
-console.log((new Date()).format('yyyy/mm/dd hh:MM'));
 
-
-
+//Иницилизация Яндекс Карт
 ymaps.ready(init);
 
+async function geoDecoder(coords) {
+    let response = await ymaps.geocode(coords);
+
+    return response.geoObjects.get(0).getAddressLine();
+}
 
 
 let coords = [];
+let placemarks = [];
 let myMap;
+let address;
 let input_Name = document.querySelector('.input_name');
 let input_PlaceName = document.querySelector('.input_place');
 let input_feedback = document.querySelector('.input_message');
 let output_Feedbacks = document.querySelector('.placemarkForm__feedbacks');
 let buttonAdd = document.querySelector('.add');
-
 let placemarkForm = document.querySelector('.placemarkForm');
-
-
-
-
-
 let closeForm = document.querySelector('.placemarkForm__header__closeButton');
+
+
 closeForm.addEventListener('click',()=>{
     placemarkForm.style.display = 'none';
 });
-
-
-
-let placemarks = [
-    // {
-    //     latitude: 59.94,
-    //     longitude: 30.32,
-    //     hintContent: 'Это хинт номер 1',
-    //     balloonContent: 'Это информация',
-    // },
-    // {
-    //     latitude: 59.942,
-    //     longitude: 30.31,
-    //     hintContent: 'Это хинт номер 2',
-    //     balloonContent: 'Это информация о чём угодно',
-    // },
-    // {
-    //     latitude: 59.946,
-    //     longitude: 30.30,
-    //     hintContent: 'Это хинт номер 3',
-    //     balloonContent: 'Это информация',
-    // },
-];
 
 if (localStorage.getItem('feedbacks') !== null) {
     placemarks =JSON.parse(localStorage.getItem('feedbacks'));
@@ -74,22 +52,28 @@ if (localStorage.getItem('feedbacks') !== null) {
     placemarks = [];
 }
 
-document.addEventListener('click',(e)=>{
+
+document.addEventListener('click',async (e)=>{
     // console.log(e.target.tagName);
 
-    if(e.target.classList.value == 'balloon_href' && e.target.tagName === 'A'){
+    if(e.target.classList.value === 'balloon_href' && e.target.tagName === 'A'){
         coords[0] = +e.target.dataset.coordsn;
         coords[1] = +e.target.dataset.coordsf;
-        console.log(coords);
-        output_Feedbacks.innerHTML = '';
+        address = await geoDecoder(coords);
+        document.querySelector('.placemarkForm__header__address_name').innerHTML = address;
+
         document.querySelector('.ymaps-2-1-76-balloon__close').click();
-        placemarkForm.style.display = 'block';
+
+        output_Feedbacks.innerHTML = '';
         for (let i = 0; i < placemarks.length; i++) {
             if (placemarks[i].latitude === coords[0] && placemarks[i].longitude === coords[1]) {
                 output_Feedbacks.innerHTML += placemarks[i].balloonContent;
             }
         }
-    };
+        placemarkForm.style.display = 'block';
+
+        console.log('из ссылки', coords)
+    }
 
 
 
@@ -110,7 +94,7 @@ function init(){
     });
 
 
-    for (var i=0; i<placemarks.length; i++) {
+    for (let i=0; i<placemarks.length; i++) {
 
         geoObjects[i] = new ymaps.Placemark([placemarks[i].latitude, placemarks[i].longitude],
             {
@@ -128,25 +112,21 @@ function init(){
 
         );
 
-        geoObjects[i].events.add('click', (e) => {
+        geoObjects[i].events.add('click', async(e) => {
+            // coords = [];
+            console.log('поштучно', coords);
             e.preventDefault();
-
-            placemarkForm.style.display = 'block';
-
-            // console.log(e.get('target')['properties']);
-            console.log(placemarks);
-
-            // output_Feedbacks.innerHTML = e.get('target')['properties'].get('balloonContent');
-            coords = e.get('target').geometry._coordinates;
-            // console.log(e.get('target').properties._data.balloonContent);
+            coords = [placemarks[i].latitude, placemarks[i].longitude];
+            address = await geoDecoder(coords);
+            document.querySelector('.placemarkForm__header__address_name').innerHTML = address;
             output_Feedbacks.innerHTML = '';
             for (let i = 0; i < placemarks.length; i++) {
                 if (placemarks[i].latitude === coords[0] && placemarks[i].longitude === coords[1]) {
                     output_Feedbacks.innerHTML += placemarks[i].balloonContent;
                 }
             }
-
-
+            placemarkForm.style.display = 'block';
+            console.log('поштучно', coords)
         });
 
 
@@ -168,19 +148,6 @@ function init(){
     clusterer.add(geoObjects);
 
 
-    // console.log(myMap.geoObjects);
-    // console.log(clusterer);
-
-
-    let address;
-
-
-
-
-
-
-
-
     // обработка клика по карте
     myMap.events.add('click', async function (e) {
         // Получение координат щелчка
@@ -195,11 +162,7 @@ function init(){
 
 
 
-    async function geoDecoder(coords) {
-        let response = await ymaps.geocode(coords);
 
-        return response.geoObjects.get(0).getAddressLine();
-    }
 
 
 //
@@ -249,17 +212,12 @@ function init(){
 
 
         // обработчик кликов по placemark
-        placemark.events.add('click', (e) => {
+        placemark.events.add('click', async(e) => {
+            //Убираем событие по умолчанию (вспытие балуна)
             e.preventDefault();
-
-            placemarkForm.style.display = 'block';
-
-            // console.log(e.get('target')['properties']);
-            console.log(placemarks);
-
-            // output_Feedbacks.innerHTML = e.get('target')['properties'].get('balloonContent');
             coords = e.get('target').geometry._coordinates;
-            // console.log(e.get('target').properties._data.balloonContent);
+            address = await geoDecoder(coords);
+            document.querySelector('.placemarkForm__header__address_name').innerHTML = address;
             output_Feedbacks.innerHTML = '';
             for (let i = 0; i < placemarks.length; i++) {
                 if (placemarks[i].latitude === coords[0] && placemarks[i].longitude === coords[1]) {
@@ -267,15 +225,20 @@ function init(){
                 }
             }
 
+            //Открываем форму с отзывами
+            placemarkForm.style.display = 'block';
+
+
+
+
 
         });
 
 
         // добавление точки на карту
-        // myMap.geoObjects.add(placemark);
 
         geoObjects.push(placemark);
-        console.log('Геообъекты: ', geoObjects);
+        // console.log('Геообъекты: ', geoObjects);
         // console.log(myMap.geoObjects);
 
 
