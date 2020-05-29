@@ -57,6 +57,7 @@ document.addEventListener('click',async (e)=>{
     // console.log(e.target.tagName);
 
     if(e.target.classList.value === 'balloon_href' && e.target.tagName === 'A'){
+        coords = [];
         coords[0] = +e.target.dataset.coordsn;
         coords[1] = +e.target.dataset.coordsf;
         address = await geoDecoder(coords);
@@ -139,7 +140,7 @@ function init(){
 
 
      // создание кластера
-    var clusterer = new ymaps.Clusterer({
+    let clusterer = new ymaps.Clusterer({
         clusterBalloonContentLayout: "cluster#balloonCarousel",
         clusterDisableClickZoom: true,
       });
@@ -184,7 +185,7 @@ function init(){
 
 
         // Создание новой placemark
-        let placemark = new ymaps.Placemark(coords,
+        geoObjects.push(new ymaps.Placemark(coords,
             {
                 hintContent: `<div class="map__hint">${address}</div>`,
                 balloonContent: `${placemarks[placemarks.length - 1].balloonContent}`,
@@ -196,8 +197,8 @@ function init(){
                 iconImageHref: 'img/icon.png',
                 iconImageSize: [25, 35],
             }
-        );
-
+        )
+    );
 
 
         output_Feedbacks.innerHTML = '';
@@ -212,32 +213,29 @@ function init(){
 
 
         // обработчик кликов по placemark
-        placemark.events.add('click', async(e) => {
-            //Убираем событие по умолчанию (вспытие балуна)
-            e.preventDefault();
-            coords = e.get('target').geometry._coordinates;
-            address = await geoDecoder(coords);
-            document.querySelector('.placemarkForm__header__address_name').innerHTML = address;
-            output_Feedbacks.innerHTML = '';
-            for (let i = 0; i < placemarks.length; i++) {
-                if (placemarks[i].latitude === coords[0] && placemarks[i].longitude === coords[1]) {
-                    output_Feedbacks.innerHTML += placemarks[i].balloonContent;
+        for (let i = 0; i < geoObjects.length; i++) {
+            geoObjects[i].events.add('click', async (ev) => {
+                //Убираем событие по умолчанию (вспытие балуна)
+                ev.preventDefault();
+                // coords = ev.get('target').geometry._coordinates;
+                coords = geoObjects[i].geometry._coordinates;
+                address = await geoDecoder(coords);
+                document.querySelector('.placemarkForm__header__address_name').innerHTML = address;
+                output_Feedbacks.innerHTML = '';
+                for (let i = 0; i < placemarks.length; i++) {
+                    if (placemarks[i].latitude === coords[0] && placemarks[i].longitude === coords[1]) {
+                        output_Feedbacks.innerHTML += placemarks[i].balloonContent;
+                    }
                 }
-            }
 
-            //Открываем форму с отзывами
-            placemarkForm.style.display = 'block';
-
-
-
-
-
-        });
-
+                //Открываем форму с отзывами
+                placemarkForm.style.display = 'block';
+            });
+        }
 
         // добавление точки на карту
 
-        geoObjects.push(placemark);
+        // geoObjects.push(placemark);
         // console.log('Геообъекты: ', geoObjects);
         // console.log(myMap.geoObjects);
 
@@ -247,14 +245,14 @@ function init(){
         clusterer.add(geoObjects);
         // console.log(coords);
 
-        clusterer.events.add('click', function (e) {
-            // placemarkForm.style.display = 'none';
-            // console.log(e.get('target').geometry._coordinates);
-
-
-
-
-        });
+        // clusterer.events.add('click', function (e) {
+        //     // placemarkForm.style.display = 'none';
+        //     // console.log(e.get('target').geometry._coordinates);
+        //
+        //
+        //
+        //
+        // });
 
         // clusterer.events.add('balloonclose', function () {alert(1)});
 
