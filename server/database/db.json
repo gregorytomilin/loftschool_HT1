@@ -1,0 +1,156 @@
+{
+  "messages": [
+    {
+      "text": "Привет!",
+      "time": "12:52",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "привет, фантомас! ты пойман!",
+      "time": "12:56",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "я тебя поймал!",
+      "time": "12:56",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "Ок!",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ывыаавы",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:57",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыва",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "!!!!",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ыфывй313441",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "143",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "ыс",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "уау",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "24",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "32",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "23131вйвй",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "432",
+      "time": "12:58",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "324вцц",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "вцвууч",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "ц4234",
+      "time": "12:58",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "Привет!",
+      "time": "13:07",
+      "userID": "Fantomas_nick"
+    },
+    {
+      "text": "Привет Фантомас!",
+      "time": "13:07",
+      "userID": "InspectorJuv_nick"
+    },
+    {
+      "text": "Ок",
+      "time": "13:07",
+      "userID": "Fantomas_nick"
+    }
+  ],
+  "users": [
+    {
+      "userName": "Fantomas",
+      "userID": "Fantomas_nick",
+      "userPhoto": "http://localhost:8081/static/bolye.jpg"
+    },
+    {
+      "userName": "InspectorJuv",
+      "userID": "InspectorJuv_nick",
+      "userPhoto": "http://localhost:8081/static/jerom.jpg"
+    }
+  ]
+}
