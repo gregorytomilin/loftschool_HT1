@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyChat</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=bb7a3fc5-2b9b-4d8a-9cc6-290a3c858de0&lang=ru_RU" type="text/javascript">
+    </script>
+</head>
+<body>
+<div class="registrationForm">
+    <div class="registrationForm_block">
+        <div class="registrationForm__img">
+            <img src="../dist/regLogo.png" alt="">
+        </div>
+        <h1>Авторизация</h1>
+        <p>Введите пожалуйста своё фио и ник для дальнейшей авторизации</p>
+        <div><input type="text" class="registrName" placeholder="Введите своё имя"></div>
+        <div><input type="text" class="registrPseudonme" placeholder="Введите своё ник"></div>
+
+        <div><button class="checkInBtn">Войти</button></div>
+    </div>
+
+</div>
+<div class="appBlock">
+    <div class="leftSideBlock">
+        <div class="userPhotoUpload">
+            <form action="#">
+
+                <input type="file" name="file" id="file" required>
+                <button type="submit">Загрузить</button>
+            </form>
+        </div>
+        <div class="users_block">
+
+        </div>
+    </div>
+<div class="messages_block">
+
+    <div class="send_block">
+        <input type="text" id="input" placeholder="Введите сообщение...">
+        <button id="send">Отправить</button>
+    </div>
+
+    <div class="messages" id="messages"></div>
+    <div class="messages_block_Header">
+        <h1>Чат</h1>
+        <p class="users_quantity"></p>
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>
